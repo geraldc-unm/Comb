@@ -162,6 +162,13 @@ extern void test_cycles_mpi_persistent(CommInfo& comminfo, MeshInfo& info,
                             IdxT num_vars, IdxT ncycles, Timer& tm, Timer& tm_total);
 #endif
 
+#ifdef COMB_ENABLE_MPI
+extern void test_cycles_mpi_partitioned(CommInfo& comminfo, MeshInfo& info,
+                            COMB::Executors& exec,
+                            COMB::Allocators& alloc,
+                            IdxT num_vars, IdxT ncycles, Timer& tm, Timer& tm_total);
+#endif
+
 #ifdef COMB_ENABLE_GDSYNC
 extern void test_cycles_gdsync(CommInfo& comminfo, MeshInfo& info,
                               COMB::Executors& exec,

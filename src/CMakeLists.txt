@@ -28,6 +28,11 @@ set(comb_sources
   test_cycles_umr.cpp
   test_cycles_basic.cpp)
 
+
+if(ENABLE_MPI)
+  list(APPEND comb_sources mpipcl.c)
+endif()
+
 macro( builddocycles COMPOL_in EXECMESH_in EXECMANY_in EXECFEW_in)
 
   set(COMPOL ${COMPOL_in})

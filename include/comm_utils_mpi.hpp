@@ -24,6 +24,7 @@
 #include <cstdio>
 
 #include <mpi.h>
+#include <mpipcl.h>
 
 namespace detail {
 
@@ -238,7 +239,7 @@ inline void Startall(int count, MPI_Request *requests)
   int ret = MPI_Startall(count, requests);
   assert(ret == MPI_SUCCESS); 
 }
-
+  
 inline void Wait(MPI_Request *request, MPI_Status *status)
 {
   // LOGPRINTF("MPI_Wait rank(w%i)\n", Comm_rank(MPI_COMM_WORLD));
@@ -311,6 +312,108 @@ inline bool Testall(int count, MPI_Request *requests, MPI_Status *statuses)
 inline void Request_free(MPI_Request *request)
 {
   int ret = MPI_Request_free(request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Psend_init(void *buf, int partitions, MPI_Count count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPIX_Request *request)
+{
+  int ret = MPIX_Psend_init(buf, partitions, count, datatype, dest, tag, comm, request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Precv_init(void *buf, int partitions, MPI_Count count, MPI_Datatype datatype, int src, int tag, MPI_Comm comm, MPIX_Request *request)
+{
+  int ret = MPIX_Precv_init(buf, partitions, count, datatype, src, tag, comm, request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pready(int partition, MPIX_Request *request)
+{
+  int ret = MPIX_Pready(partition, request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pready_range(int partition_low, int partition_high, MPIX_Request *request)
+{
+  int ret = MPIX_Pready_range(partition_low, partition_high, request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pready_list(int length, int array_of_partitions[], MPIX_Request *request)
+{
+  int ret = MPIX_Pready_list(length, array_of_partitions, request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Parrived(MPIX_Request *request, int partition, int *flag)
+{
+  int ret = MPIX_Parrived(request, partition, flag);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pstart(MPIX_Request *request)
+{
+  int ret = MPIX_Start(request);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pstartall(int count, MPIX_Request array_of_requests[])
+{
+  int ret = MPIX_Startall(count, array_of_requests);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pwait(MPIX_Request *request, MPI_Status *status)
+{
+  int ret = MPIX_Wait(request, status);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pwaitall(int count, MPIX_Request array_of_requests[], MPI_Status array_of_statuses[])
+{
+  int ret = MPIX_Waitall(count, array_of_requests, array_of_statuses);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pwaitany(int count, MPIX_Request array_of_requests[], int *index, MPI_Status *status)
+{
+  int ret = MPIX_Waitany(count, array_of_requests, index, status);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Pwaitsome(int incount, MPIX_Request array_of_requests[], int *outcount, int array_of_indices[], MPI_Status array_of_statuses[])
+{
+  int ret = MPIX_Waitsome(incount, array_of_requests, outcount, array_of_indices, array_of_statuses);
+  assert(ret == MPI_SUCCESS);
+}
+
+inline void Ptest(MPIX_Request *request, int *flag, MPI_Status *status)
+{
+  int ret = MPIX_Test(request, flag, status);
+  assert(ret == MPI_SUCCESS);
+}
+  
+inline void Ptestall(int count, MPIX_Request array_of_requests[], int *flag, MPI_Status array_of_statuses[])
+{
+  int ret = MPIX_Testall(count, array_of_requests, flag, array_of_statuses);
+  assert(ret == MPI_SUCCESS);
+}
+  
+inline void Ptestany(int count, MPIX_Request array_of_requests[], int *index, int *flag, MPI_Status *status)
+{
+  int ret = MPIX_Testany(count, array_of_requests, index, flag, status);
+  assert(ret == MPI_SUCCESS);
+}
+  
+inline void Ptestsome(int incount, MPIX_Request array_of_requests[], int *outcount, int array_of_indices[], MPI_Status array_of_statuses[])
+{
+  int ret = MPIX_Testsome(incount, array_of_requests, outcount, array_of_indices, array_of_statuses);
+  assert(ret == MPI_SUCCESS);
+}
+  
+inline void Prequest_free(MPIX_Request *request) 
+{
+  int ret = MPIX_Request_free(request);
   assert(ret == MPI_SUCCESS);
 }
 
